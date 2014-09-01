@@ -1,0 +1,24 @@
+@(formData: Form[EntryRecord], allEntries : List[EntryRecord])
+
+@import helper._
+
+
+
+@main("Welcome to Play") {
+
+    <h1>Ultra simple webapp</h1>
+
+    <ul>
+        @allEntries.map{ entry =>
+            <li><b>@entry.created.toString("dd.MM.YYYY HH:mm")</b> @entry.message</li>
+        }
+    </ul>
+
+    @form(routes.Application.newEntry()){
+        @inputText(formData("message"), '_label -> "", '_showConstraints -> false)
+
+        <input type="submit" value="Add" >
+    }
+    
+
+}
