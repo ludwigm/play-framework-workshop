@@ -8,15 +8,11 @@ import utils.Implicits._
  */
 object EntryDAO {
 
-  //private var entries = List[EntryRecord]()
-
   def addEntry(entry:EntryRecord) = {
-    //entries = entry :: entries
     DB.save(entry)
   }
 
   def findAll = {
-    //entries.sortBy(_.created)
-    DB.query[EntryRecord].fetch().toList
+    DB.query[EntryRecord].fetch().toList.sortBy(_.created)
   }
 }

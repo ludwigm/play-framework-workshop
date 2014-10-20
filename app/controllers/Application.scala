@@ -1,25 +1,23 @@
 package controllers
 
-import java.util.Date
+
 
 import models.{EntryRecord, EntryDAO}
-import org.joda.time.DateTime
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.libs.json.Json
 import play.api.mvc._
-
 
 object Application extends Controller {
 
   def index = Action {
     val entries = EntryDAO.findAll
     println(entries)
-    Ok(views.html.index(entryForm, entries))
+    Ok(views.html.index(EntryRecord.entryForm, entries))
   }
 
   def newEntry() = Action { implicit request =>
-    val formData = entryForm.bindFromRequest()
+    val formData = EntryRecord.entryForm.bindFromRequest()
     formData.fold(
       hasErrors = { formData =>
         println(formData)
@@ -42,12 +40,6 @@ object Application extends Controller {
 
 
 
-  private val entryForm : Form[EntryRecord] = Form(
-    mapping(
-      "message"->text(3,20)
-    )
-      (apply   = EntryRecord.applyPartial)
-      (unapply = EntryRecord.unapplyPartial))
 }
 
 
