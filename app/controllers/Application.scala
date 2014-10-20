@@ -2,11 +2,13 @@ package controllers
 
 import java.util.Date
 
-import models.EntryDAO
+import models.{EntryRecord, EntryDAO}
 import org.joda.time.DateTime
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.libs.json.Json
 import play.api.mvc._
+
 
 object Application extends Controller {
 
@@ -30,6 +32,14 @@ object Application extends Controller {
       })
   }
 
+  def listEntries = Action {
+    import models.EntryRecord.entryWrites
+
+    val entries = EntryDAO.findAll
+    val jsonEntries = Json.toJson(entries)
+    Ok(jsonEntries)
+  }
+
 
 
   private val entryForm : Form[EntryRecord] = Form(
@@ -41,14 +51,3 @@ object Application extends Controller {
 }
 
 
-case class EntryRecord(message:String, created:DateTime = DateTime.now)
-
-object EntryRecord{
-  def applyPartial(message:String) = {
-    EntryRecord(message)
-  }
-
-  def unapplyPartial(entry:EntryRecord) = {
-    Some(entry.message)
-  }
-}

@@ -1,6 +1,6 @@
 package models
+import sorm._
 
-import controllers.EntryRecord
 import utils.Implicits._
 
 /**
@@ -8,13 +8,15 @@ import utils.Implicits._
  */
 object EntryDAO {
 
-  private var entries = List[EntryRecord]()
+  //private var entries = List[EntryRecord]()
 
   def addEntry(entry:EntryRecord) = {
-    entries = entry :: entries
+    //entries = entry :: entries
+    DB.save(entry)
   }
 
   def findAll = {
-    entries.sortBy(_.created)
+    //entries.sortBy(_.created)
+    DB.query[EntryRecord].fetch().toList
   }
 }
