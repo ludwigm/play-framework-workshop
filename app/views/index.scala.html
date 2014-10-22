@@ -1,4 +1,4 @@
-@(formData: Form[EntryRecord], allEntries : List[EntryRecord])
+@(formData: Form[EntryRecord], allEntries : List[EntryRecord])(implicit flash : Flash)
 
 @import helper._
 
@@ -7,6 +7,10 @@
 @main("Welcome to Play") {
 
     <h1>Ultra simple webapp</h1>
+
+    @if(flash.get("error").isDefined){
+        <h3>@flash.get("error")</h3>
+    }
 
     <ul>
         @allEntries.map{ entry =>
