@@ -20,14 +20,6 @@ object EntryRecord{
     Some(entry.message)
   }
 
-  /*def apply(message:String, created:DateTime = DateTime.now) = {
-    new EntryRecord(message, created)
-  }*/
-
-  /*def unapply(entryRecord:EntryRecord) = {
-    Some(entryRecord.message, entryRecord.created)
-  }*/
-
   implicit val entryWrites = Json.writes[EntryRecord]
 
   implicit val entryReads = Json.reads[EntryRecord]
@@ -39,19 +31,6 @@ object EntryRecord{
       (apply   = EntryRecord.applyPartial)
       (unapply = EntryRecord.unapplyPartial))
 
-/*
-  implicit val entryWrites = new Writes[EntryRecord]{
-    def writes(entry: EntryRecord): JsValue = {
-      Json.obj(
-        "message" -> entry.message,
-        "created" -> entry.created
-      )
-    }
-  }
-  */
-/*
-  implicit val barReads = Json.reads[EntryRecord]
-  */
 }
 
 
